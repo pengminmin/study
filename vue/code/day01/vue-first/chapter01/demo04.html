@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:v-on="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <button v-on:click="sayHi">click me</button>
+</div>
+<script src="vue.js"></script>
+<script>
+    var vm = new Vue({
+       el: "#app",
+       data: {
+           message: "alis"
+       },
+       methods: {
+           sayHi: function(){
+               alert(this.message);
+           }
+       }
+    });
+
+</script>
+</body>
+</html>

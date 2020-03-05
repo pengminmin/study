@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div id="app">
+    <com v-for="item in items" v-bind:ali="item"></com>
+</div>
+<script src="vue.js"></script>
+<script>
+    Vue.component("com",{
+        props: ["ali"],
+       template: "<li>{{ali}}</li>"
+    });
+    var vm = new Vue({
+        el: "#app",
+        data: {
+            items: ["java", "php", "html"]
+        }
+    });
+</script>
+</body>
+</html>
