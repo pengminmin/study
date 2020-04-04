@@ -1,0 +1,13 @@
+    1  ls
+    2  yum search docker
+    3  sudo yum remove docker                   docker-client                   docker-client-latest                   docker-common                   docker-latest                   docker-latest-logrotate                   docker-logrotate                   docker-engine
+    4  sudo yum install -y yum-utils   device-mapper-persistent-data   lvm2
+    5  sudo yum-config-manager     --add-repo     https://download.docker.com/linux/centos/docker-ce.repo
+    6  sudo yum install docker-ce docker-ce-cli containerd.io -y
+    7  systemctl start docker
+    8  docker run hello-world
+    9  sudo curl -L "https://github.com/docker/compose/releases/download/1.25.4/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+   10  ls
+   11  sudo chmod +x /usr/local/bin/docker-compose
+   12  docker-compose --version
+   13  history > history.txt

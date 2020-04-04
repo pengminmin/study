@@ -36,6 +36,23 @@
 }
 ```
 
+## IP静态化设置
+
+```shell
+vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
+ONBOOT=yes 这里指系统启动时就启动网络服务
+#BOOTPROTO=dhcp 将动态分配ip地址注释
+BOOTPROTO=static 使用静态ip地址
+IPADDR=192.168.0.117 ip地址
+NETMASK=255.255.255.0 子网掩码
+GATEWAY=192.168.0.1 网关
+
+#重启网卡
+service network restart
+#查看网络信息
+ifconfig
+```
+
 
 
 ## 基础网络配置和常用命令安装
@@ -55,8 +72,39 @@ yum install -y wget
 yum install -y net-tools
 yum install -y vim
 
+yum install -y wget net-tools vim
 
 
+
+```
+
+## 配置共享文件夹
+
+[文档](https://blog.csdn.net/liu_shi_jun/article/details/77951959)
+
+[共享文件夹](https://www.cnblogs.com/uqing/p/8160318.html)
+
+
+
+```shell
+# 查看光驱挂载情况
+lsscsi 
+# 建立文件夹
+mkdir /media/cdrom
+# mount挂载
+mount /dev/sr0 /media/cdrom
+# 安装VBoxLinuxAdditons.run依赖功能
+yum install -y gcc kernel-devel kernel-headers dkms make bzip2
+# 安装增加VBoxLinuxAdditons.run
+sh ./VBoxLinuxAdditons.run
+# 错误:缺少bzip2包，无法解压文件
+yum install -y bzip2
+# 错误:Kernel headers not found for target kernel 3.10.0-957.el7.x86_64. Please install them and execute
+yum update -y kernel
+yum -y install xorg-x11-server-Xorg
+# 进入 /media 目录出现sf_share(其中share是代表我共享文件夹的名字 share——前面出现的sf代表成功) 
+# 挂载目录
+mount -t vboxsf local /home/share
 ```
 
 
@@ -125,5 +173,6 @@ make install
 
 ```
 
+https://www.cnblogs.com/uqing/p/8160318.html
 
-
+yum install -y gcc kernel-devel kernel-headers dkms make bzip2
