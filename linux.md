@@ -75,3 +75,10 @@ November
 December
 ```
 
+## make加快编译速度
+
+```bash
+# -j 后面接cpu核数*2，编译命令并行
+make -j4
+```
+

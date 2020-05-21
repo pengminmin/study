@@ -19,3 +19,31 @@ MySQL查看隔离界别命令
 MySQL设置隔离级别命令
 > set tx_isolation='read-committed';
 
+## 查看默认密码
+
+```bash
+grep 'temporary password' /var/log/mysqld.log
+```
+
+## 重置密码
+
+```bash
+# mysql 5.7
+set password for 'root'@'localhost'=password('root');
+# 报错
+# ERROR 1819 (HY000): Your password does not satisfy the current policy requirements
+# 修改 validate_password_policy
+set global validate_password_policy=0;
+# 修改 validate_password_length
+set global validate_password_length=1;
+# 刷新权限
+flush privileges;
+
+# 正确流程
+set global validate_password_policy=0;
+set global validate_password_length=1;
+set password for 'root'@'localhost'=password('root');
+flush privileges;
+exit;
+```
+

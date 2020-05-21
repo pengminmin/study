@@ -54,7 +54,7 @@ drush cr
 ## 随记
 
 1. entity，实体是面向对象的实现，里面有数据，操作方法，配置，是子系统
-2. 要建立数据库，需要给模块简历一个install文件，例如：dblog.install
+2. 要建立数据库，需要给模块建立一个install文件，例如：dblog.install
 3. 路由与常见的mvc格式不同，而是将路由表达与系统内部解耦，可以使用任意的字符串表达路由，路由的使用要生成 name.routing.yml (name为模块名)文件来定义
 
 

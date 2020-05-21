@@ -1,5 +1,7 @@
 
 
+[toc]
+
 ## 初始Nginx
 
 ### 编译自己的Nginx
@@ -169,6 +171,10 @@ location /res {
     alias /usr/local/src;
     # 开始web静态资源服务
     autoindex on;
+
+    autoindex_format html; #以html风格将目录展示在浏览器中
+    autoindex_exact_size off; #切换为 off 后，以可读的方式显示文件大小，单位为 KB、MB 或者 GB
+    autoindex_localtime on; #以服务器的文件时间作为显示的时间
     # 限速
     set $limit_rate 100k;
 }
@@ -1002,3 +1008,99 @@ location,if in location,limit_except
 ## 从源码视角深入使用Nginx和OpenResty
 
 [1]: https://www.bilibili.com/video/BV1S54y1R7SB
+
+## [Nginx 自定义配置](https://www.digitalocean.com/community/tools/nginx)
+
+### https 配置
+
+```nginx
+server {
+     #SSL 访问端口号为 443
+     listen 443 ssl; 
+     #填写绑定证书的域名
+     server_name www.domain.com; 
+     #证书文件名称
+     ssl_certificate 1_www.domain.com_bundle.crt; 
+     #私钥文件名称
+     ssl_certificate_key 2_www.domain.com.key; 
+     ssl_session_timeout 5m;
+     #请按照以下协议配置
+     ssl_protocols TLSv1 TLSv1.1 TLSv1.2; 
+     #请按照以下套件配置，配置加密套件，写法遵循 openssl 标准。
+     ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:HIGH:!aNULL:!MD5:!RC4:!DHE; 
+     ssl_prefer_server_ciphers on;
+     location / {
+        #网站主页路径。此路径仅供参考，具体请您按照实际目录操作。
+         root /var/www/www.domain.com; 
+         index  index.html index.htm;
+     }
+ }
+```
+
+#### http 自动跳转 https
+
+```nginx
+server {
+    listen 443 ssl;
+    #填写绑定证书的域名
+    server_name www.domain.com; 
+    #网站主页路径。此路径仅供参考，具体请您按照实际目录操作。
+    root /var/www/www.domain.com; 
+    index index.html index.htm;   
+    #证书文件名称
+    ssl_certificate  1_www.domain.com_bundle.crt; 
+    #私钥文件名称
+    ssl_certificate_key 2_www.domain.com.key; 
+    ssl_session_timeout 5m;
+    ssl_ciphers ECDHE-RSA-AES128-GCM-SHA256:ECDHE:ECDH:AES:HIGH:!NULL:!aNULL:!MD5:!ADH:!RC4;
+    ssl_protocols TLSv1 TLSv1.1 TLSv1.2;
+    ssl_prefer_server_ciphers on;
+    location / {
+       index index.html index.htm;
+    }
+}
+server {
+	listen 80;http://116.62.134.184:8989/
+    #填写绑定证书的域名
+    server_name www.domain.com; 
+    #把http的域名请求转成https
+    return 301 https://$host$request_uri; 
+}
+```
+
+## 静态文件缓存
+
+```nginx
+location ~*  \.(jpg|jpeg|png|gif|ico|css|js)$ { 
+   expires 365d; 
+} 
+```
+
+## gzip
+
+```nginx
+#开启和关闭gzip模式
+gzip on;
+
+#gizp压缩起点，文件大于1k才进行压缩
+gzip_min_length 1k;
+
+# gzip 压缩级别，1-9，数字越大压缩的越好，也越占用CPU时间
+gzip_comp_level 6;
+
+# 进行压缩的文件类型。
+gzip_types text/plain application/javascript application/x-javascript text/css application/xml text/xml text/javascript application/json image/png image/gif image/jpeg;
+
+#nginx对于静态文件的处理模块，开启后会寻找以.gz结尾的文件，直接返回，不会占用cpu进行压缩，如果找不到则不进行压缩
+# gzip_static on|off
+
+# 是否在http header中添加Vary: Accept-Encoding，建议开启
+gzip_vary on;
+
+# 设置压缩所需要的缓冲区大小，以4k为单位，如果文件为7k则申请2*4k的缓冲区 
+gzip_buffers 4 16k;
+
+# 设置gzip压缩针对的HTTP协议版本
+# gzip_http_version 1.1;
+```
+

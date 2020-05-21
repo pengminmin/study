@@ -82,6 +82,23 @@
    sed -i `s/"172.16.137.53"/"116.62.134.184"/g` `grep -rl "172.16.137.53"`
    
    
+   grep -rl "copyrights"
+copyrights 
+   grep -rl "IMIGRATION"
+   sed -i `:s/"IMIGRATION"/"IMMIGRATION"/g` `grep -lr "IMIGRATION"`
+   ```
+   
+9. sed
+
+   ```bash
+   # 直接修改读取的文件内容，而不是输出到终端。
+   sed -i
    ```
 
-   
+10. 查看端口范围
+
+    ```bash
+    sysctl -a | grep range
+    ```
+
+    

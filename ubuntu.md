@@ -20,5 +20,15 @@ nginx -v
   apt update -y
   ```
 
-  
+
+## 查看ubuntu版本
+
+```bash
+# 简单信息
+cat /etc/issue
+# 详细信息
+cat /etc/lsb-release
+```
+
+
 

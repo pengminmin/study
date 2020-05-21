@@ -1,0 +1,28 @@
+[Unit]
+Description=The PHP FastCGI Process Manager
+After=syslog.target network.target
+
+[Service]
+Type=forking
+PIDFile=/var/run/php-fpm.pid
+ExecStart=/usr/local/php/sbin/php-fpm
+ExecReload=/bin/kill -USR2 $MAINPID
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
+
+
+# 放入 /usr/lib/systemd/system/ 下
+
+# 重载systemctl
+systemctl daemon-reload
+
+# 常用命令
+systemctl start php-fpm  #启动服务
+systemctl status php-fpm  #查看状态
+systemctl stop php-fpm  #停止服务
+systemctl restart php-fpm  #重启服务
+systemctl reload php-fpm  #修改配置文件后重载
+systemctl enable php-fpm  #开机自启动
+systemctl didable php-fpm  #禁止开机自启动
