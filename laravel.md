@@ -10,7 +10,7 @@ composer create-project --prefer-dist laravel/laravel blog6 "6.*"
 composer create-project laravel/laravel blog-default
 ```
 
-## migrate
+## migrate 数据迁移
 
 ```bash
 # 数据迁移
@@ -22,6 +22,10 @@ php artisan migrate
 
 
 ```
+
+### [数据迁移字段类型及字段长度](https://www.cnblogs.com/love-snow/articles/8891071.html)
+
+
 
 ## homestead
 
@@ -109,4 +113,89 @@ vagrant provision && vagrant reload
 ```
 
 - `vagrant provision` 是命令 Vagrant 重新加载 `Homestead.yaml` 配置
+
+## 路由
+
+### resource
+
+```php
+/**
+ * HTTP 请求 | URL                 | 动作                           | 作用
+ * POST     | 	/statuses         | StatusesController@store       | 处理创建微博的请求
+ * DELETE   | /statuses/{status} | StatusesController@destroy      | 处理删除微博的请求
+ *
+ */
+Route::resource('statuses', 'StatusesController', ['only' => ['store', 'destroy']]);
+```
+
+```php
+// 生成 controller
+php artisan make:controller PhotoController --resource
+// route
+Route::resource('photos', 'PhotoController');
+//相当于
+//展示照片列表
+Route::get('photos', 'PhotoController@index')->name('photos.index');
+//展示一张照片
+Route::get('photos/{photo}', 'PhotoController@show')->name('photos.show');
+//展示用来创建照片的表单
+Route::get('photos/create', 'PhotoController@create')->name('photos.create');
+//展示编辑照片表单
+Route::get('photos/{photo}/edit', 'PhotoController@edit')->name('photos.edit');
+//添加照片
+Route::post('photos', 'PhotoController@store')->name('photos.store');
+//更新一张照片
+Route::put('photos/{photo}', 'PhotoController@update')->name('photos.update');
+Route::patch('photos/{photo}', 'PhotoController@update')->name('photos.update');
+//移除一张照片
+Route::delete('photos/{photo}', 'PhotoController@destroy')->name('photos.destroy');
+```
+
+| 方法      | uri                 | 路由名称       | 控制器@方法             | 用途                   |
+| --------- | ------------------- | -------------- | ----------------------- | ---------------------- |
+| GET       | photos              | photos.index   | PhotoController@index   | 展示照片列表           |
+| POST      | photos              | photos.store   | PhotoController@store   | 添加照片               |
+| GET       | photos/create       | photos.create  | PhotoController@create  | 展示用来创建照片的表单 |
+| GET       | photos/{photo}      | photos.show    | PhotoController@show    | 展示一张照片           |
+| PUT/PATCH | photos/{photo}      | photos.update  | PhotoController@update  | 更新一张照片           |
+| DELETE    | photos/{photo}      | photos.destroy | PhotoController@destroy | 移除一张照片           |
+| GET       | photos/{photo}/edit | photos.edit    | PhotoController@edit    | 展示编辑照片表单       |
+
+```php
+
+* GET /photos
+index()  //  展示照片列表
+
+* POST /photos
+store()  // 添加照片
+
+* GET /photos/create
+create()  // 展示用来创建照片的表单
+
+* GET /photos/{id}
+show($id)  // 展示一张照片
+
+* PUT /photos/{id}
+update($id)  // 更新一张照片
+
+* DELETE /photos/{id} 
+destroy($id)  // 移除一张照片
+
+* GET /photos/{id}/edit
+edit($id)  // 展示编辑照片表单
+    
+```
+
+## JWT
+
+
+
+## 开启日志
+
+```php
+ //开启执行日志
+//        DB::connection()->enableQueryLog();
+ //记录日志
+//        info('query log', [DB::getQueryLog()]);
+```
 

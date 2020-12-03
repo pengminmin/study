@@ -38,6 +38,10 @@
 
 ## IP静态化设置
 
+### 查看 ip
+
+> ip add
+
 ```shell
 vim /etc/sysconfig/network-scripts/ifcfg-enp0s3
 ONBOOT=yes 这里指系统启动时就启动网络服务

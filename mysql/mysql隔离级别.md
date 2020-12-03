@@ -1,0 +1,5 @@
+```bash
+SELECT @@tx_isolation; #查询隔离级别
+SET SESSION TRANSACTION ISOLATION LEVEL READ UNCOMMITTED; # 更改隔离级别
+```
+

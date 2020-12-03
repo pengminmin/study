@@ -25,7 +25,10 @@
    > drupal chain --file="C:\Users\tom\.console\chain\quick-start.yml"
    > 
    > php -r "readfile('drupal');" | php
-   > 
+   > # dumpautoload
+   > composer dumpautoload
+   > # 等价于
+   > composer dump-autoload
    > ```
 
 2. 取消配置
@@ -61,5 +64,16 @@
 
 ```bash
 composer global require hirak/prestissimo
+```
+
+## centos7 安装 composer
+
+```bash
+# 使用命令下载
+curl -sS https://getcomposer.org/installer | php
+# 移动到 /usr/local/bin 下
+mv composer.phar /usr/local/bin/composer
+# 修改权限
+chmod -R 777 /usr/local/bin/composer
 ```
 

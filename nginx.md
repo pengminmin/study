@@ -1001,13 +1001,30 @@ proxy_pass URL;
 location,if in location,limit_except
 ```
 
-[test][1]
+```nginx
+server {
+	listen 80;
+	server_name vidy-test-shared.com;
+
+	location / {
+		proxy_redirect off;
+	    # proxy_set_header host $host;
+        # $http_origin 获取原来的 HTTP_ORIGIN
+	    proxy_set_header origin $http_origin;
+	    proxy_set_header X-real-ip $remote_addr;
+	    proxy_set_header X-forward-for $proxy_add_x_forwarded_for;
+		proxy_pass http://vidy.test;
+
+	}
+}
+```
+
+
+
 
 ## Nginx的系统层性能优化
 
 ## 从源码视角深入使用Nginx和OpenResty
-
-[1]: https://www.bilibili.com/video/BV1S54y1R7SB
 
 ## [Nginx 自定义配置](https://www.digitalocean.com/community/tools/nginx)
 

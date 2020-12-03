@@ -158,6 +158,7 @@
     
     set password fro "jenga_prod_user"@"localhost"=password("co2ykH9Vsi0J8HXe");
     
+    ```
 # 创建用户并授权
     create user 'jenga_prod_user'@'localhost' identified by 'co2ykH9Vsi0J8HXe';
     
@@ -210,6 +211,18 @@
     还需要开个8089的安全组端口给haokanadmin
     
     ```
-    
-    
 
+
+​    
+
+## win10 中 virtualbox 报错：`Call to VidMessageSlotMap failed: Last=0xc000000d/87 (VERR_NEM_VM_CREATE_FAILED).`
+
+```bash
+# 需要关闭 Hyper-V 和 Containers
+```
+
+## Call to VidMessageSlotMap failed: Last=0xc000000d/87 (VERR_NEM_VM_CREATE_FAILED).
+
+必须以管理员的身份启动window命令窗口并运行 `bcdedit /set hypervisorlaunchtype off`
+
+然后重启电脑

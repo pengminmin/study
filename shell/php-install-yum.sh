@@ -11,7 +11,7 @@ PHP_Install()
 	#安装php7.2
 	yum --enablerepo=remi-php72
 	#安装php扩展
-	yum install -y php72w php72w-cli php72w-fpm php72w-common php72w-devel php72w-embedded php72w-gd php72w-mbstring php72w-mysqlnd php72w-opcache php72w-pdo php72w-xml
+	yum install -y php72w php72w-cli php72w-fpm php72w-common php72w-devel php72w-embedded php72w-gd php72w-mbstring php72w-mysqlnd php72w-opcache php72w-pdo php72w-xml php72w-pecl-redis
 	#启动php-fpm
 	systemctl start php-fpm
 	#开机自启动
